@@ -1,0 +1,58 @@
+{
+    "language": {
+        "en": "English",
+        "jp": "Japanese",
+        "vi": "Vietnamese"
+    },
+    "navbar": {
+        "user": {
+            "profile": "Profile",
+            "history": "History",
+            "settings": "Settings",
+            "logout": "Logout"
+        }
+    },
+    "footer": {
+        "copyright": "Copyright"
+    },
+    "routes": {
+        "home": "Home",
+        "features": "Features",
+        "about": "About",
+        "dashboard": "Dashboard",
+        "translation": "Translation"
+    },
+    "components": {
+        "common": {
+            "file-upload": {
+                "drop-file-here": "Drop file here",
+                "drop-file-description": "Drag and drop files here, or click to select files"
+            },
+            "login": {
+                "title": "Login",
+                "email": "Email",
+                "email-placeholder": "Enter email",
+                "password": "Password",
+                "password-placeholder": "Enter password",
+                "btn-login": "Login",
+                "error": {
+                    "email": "Email is required",
+                    "password": "Password is required",
+                    "INVALID_LOGIN_CREDENTIALS": "Invalid email or password",
+                    "INVALID_EMAIL": "Invalid email"
+                }
+            }
+        }
+    },
+    "translation": {
+        "choose-language": "Select Language",
+        "choose-source-language": "Choose source language",
+        "choose-target-language": "Choose target language",
+        "btn-translate": "Translate",
+        "error": {
+            "max-file-size": "Maximum file size is {maxSize}MB"
+        },
+        "translated-files": "Translated Files",
+        "btn-reset": "Reset"
+    }
+}

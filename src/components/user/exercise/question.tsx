@@ -1,7 +1,7 @@
-import { Card } from "@/components/common";
+import { Card } from '@/components/common';
 
 const Question = () => {
-  return <Card>Question</Card>;
+    return <Card>Question</Card>;
 };
 
 export default Question;
