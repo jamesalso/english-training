@@ -1,15 +1,21 @@
 'use client';
 import { useApi } from '@/lib/hooks';
-import { useEffect } from 'react';
+import { APIResponse, I_QuestionDocument } from '@/typescript';
+import { useEffect, useState } from 'react';
 
 const QuestionManagement = () => {
-    const { isLoading, callApi } = useApi();
+    const { isLoading, callApi } = useApi<APIResponse<I_QuestionDocument>>();
+    const [questions, setQuestions] = useState<I_QuestionDocument[]>([]);
 
     const getQuestions = async () => {
-        // const response = await callApi({
-        //     method: 'GET',
-        //     url: `/questions`,
-        // });
+        const response = await callApi({
+            method: 'GET',
+            url: `/questions`,
+        });
+
+        if (response?.success) {
+            setQuestions(response?.result?.docs ?? []);
+        }
         // const response = await callApi({
         //     method: 'POST',
         //     url: `/questions`,
@@ -26,7 +32,9 @@ const QuestionManagement = () => {
 
     return (
         <div>
-            <h1>Question Management</h1>
+            {questions.map((question) => (
+                <div key={question.id}>{question.question}</div>
+            ))}
         </div>
     );
 };

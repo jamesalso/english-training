@@ -25,8 +25,8 @@ export type T_Any =
     | null
     | undefined;
 
-export interface DocumentPaginate {
-    docs: [JSON];
+export interface DocumentPaginate<T> {
+    docs: [T];
     totalDocs: number;
     offset: number;
     limit: number;
@@ -39,8 +39,8 @@ export interface DocumentPaginate {
     nextPage: number;
 }
 
-export interface APIResponse {
+export interface APIResponse<T> {
     success: boolean;
     message?: String;
-    result?: DocumentPaginate;
+    result?: DocumentPaginate<T>;
 }
