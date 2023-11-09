@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { useToast } from '@/lib/hooks';
 import { useState } from 'react';
 
 async function handleResponse<T>(response: AxiosResponse<T>): Promise<T> {
@@ -12,7 +11,6 @@ async function handleResponse<T>(response: AxiosResponse<T>): Promise<T> {
 }
 
 export const useApi = <T>() => {
-    const { toast } = useToast();
     // const tokenCookie = useCookie<string>('cookie');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -39,10 +37,7 @@ export const useApi = <T>() => {
 
             return handleResponse<T>(response);
         } catch (error) {
-            toast({
-                variant: 'destructive',
-                description: (error as Error).message,
-            });
+            console.error((error as Error).message);
         } finally {
             setIsLoading(false);
         }

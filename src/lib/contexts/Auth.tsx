@@ -6,7 +6,6 @@ import {
     useApi,
     useCookie,
     useLocalStorage,
-    useToast,
     useTranslations,
 } from '@/lib/hooks';
 import {
@@ -30,7 +29,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = withI18n(
         const [user, setUser] = useState<null | I_User>(null);
         const [error, setError] = useState<null | I_AuthError>(null);
         const localUser = useLocalStorage<I_User>('user');
-        const { toast } = useToast();
         const tokenCookie = useCookie<string>('cookie');
         const tComponent = useTranslations('components');
         const { isLoading, callApi } = useApi<I_LoginResponse>();
@@ -54,12 +52,9 @@ export const AuthProvider: FC<{ children: ReactNode }> = withI18n(
                 });
 
                 if (response?.error) {
-                    toast({
-                        variant: 'destructive',
-                        description: tComponent(
-                            `common.login.error.${response?.error?.message}`,
-                        ),
-                    });
+                    console.error(
+                        `common.login.error.${response?.error?.message}`,
+                    );
                 } else {
                     tokenCookie.set(response?.idToken as string, {
                         expires: +(response?.expiresIn ?? 0) as number,
