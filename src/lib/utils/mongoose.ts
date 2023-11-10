@@ -1,5 +1,5 @@
 'use server';
-import { Document, Schema, model } from 'mongoose';
+import mongoose, { Document, Schema, model } from 'mongoose';
 import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import {
@@ -56,6 +56,10 @@ export const generateModel = <T extends Document>({
     virtuals,
     middlewares,
 }: I_GenerateModelOptions<T>) => {
+    if (mongoose.models[name]) {
+        return mongoose.models[name];
+    }
+
     const generatedSchema = generateSchema({ schema, virtuals });
 
     generatedSchema.add(genericSchema);

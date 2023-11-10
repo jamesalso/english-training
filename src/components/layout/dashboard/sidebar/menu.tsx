@@ -1,6 +1,10 @@
+import { FaQuestion } from 'react-icons/fa';
+
+import { useTranslations } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
 export const SidebarMenu = () => {
+    const t = useTranslations('admin');
     const isSidebarOpen = true;
 
     return (
@@ -16,10 +20,10 @@ export const SidebarMenu = () => {
                     href={'path'}
                     title={'menu?.text'}
                 >
-                    {'menu?.icon'}
+                    <FaQuestion />
                     {isSidebarOpen && (
                         <span className="ml-2 hidden text-base sm:block">
-                            {'menu?.text'}
+                            {t('sidebar.questions-management')}
                         </span>
                     )}
                 </a>

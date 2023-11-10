@@ -9,7 +9,7 @@ export const LanguageContext = createContext<I_LanguageContextType | undefined>(
 );
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-    const [selectedLanguage, setSelectedLanguage] = useState('en');
+    const [selectedLanguage, setSelectedLanguage] = useState('vi');
     const localLang = useLocalStorage<string>('lang');
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         if (window !== undefined) {
-            setSelectedLanguage(localLang.value || 'en');
+            setSelectedLanguage(localLang.value || 'vi');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

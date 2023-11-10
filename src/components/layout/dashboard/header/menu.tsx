@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
+
+import { useAuth } from '@/lib/hooks';
 import { Dropdown } from '.';
 
 export const HeaderMenu = () => {
+    const { user } = useAuth();
     const [showDropdown, setShowDropdown] = useState(false);
 
     return (
@@ -13,7 +16,7 @@ export const HeaderMenu = () => {
                     onClick={() => setShowDropdown(!showDropdown)}
                 >
                     <img
-                        src={''}
+                        src={user?.avatar}
                         alt="avatar"
                         className="w-[35px] rounded-full bg-white/50 shadow-[0_0_16px_-8px] shadow-black/25"
                     />

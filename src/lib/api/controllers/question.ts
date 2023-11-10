@@ -1,18 +1,20 @@
+import type { NextApiRequest } from 'next';
+import { C_ResponseStatus, E_SentryLevel } from 'odhq-types';
+
 import { crudCtr } from '@/lib/api/controllers';
 import { questionModel } from '@/lib/api/models';
 import { throwResponse } from '@/lib/utils';
-import { C_ResponseStatus, E_SentryLevel } from 'odhq-types';
 
 const questionCtr = {
-    getQuestion: async (req: any, args: any) => {
+    getQuestion: async (req: NextApiRequest, args: any) => {
         return crudCtr.findOne(questionModel, args);
     },
-    getQuestions: async (req: any, args = {}) => {
+    getQuestions: async (req: NextApiRequest, args = {}) => {
         const { query = {}, ...options }: any = args;
 
         return crudCtr.findPaging(questionModel, query, options);
     },
-    createQuestion: async (req: any, args: any) => {
+    createQuestion: async (req: NextApiRequest, args: any) => {
         const { name, ...rest } = args;
         const questionFound = await questionCtr.getQuestion(req, { name });
 
@@ -33,7 +35,7 @@ const questionCtr = {
             ...rest,
         });
     },
-    updateQuestion: async (req: any, args: any) => {
+    updateQuestion: async (req: NextApiRequest, args: any) => {
         const { id, image, ...rest } = args;
         const questionFound = await questionCtr.getQuestion(req, { id });
 
@@ -76,7 +78,7 @@ const questionCtr = {
             { ...(image && { image }), ...rest },
         );
     },
-    deleteQuestion: async (req: any, args: any) => {
+    deleteQuestion: async (req: NextApiRequest, args: any) => {
         const { id } = args;
         const questionFound = await questionCtr.getQuestion(req, { id });
 
@@ -111,7 +113,7 @@ const questionCtr = {
 
         return crudCtr.delete(questionModel, { id });
     },
-    softDeleteQuestion: async (req: any, args: any) => {
+    softDeleteQuestion: async (req: NextApiRequest, args: any) => {
         const { id } = args;
         const questionFound = await questionCtr.getQuestion(req, { id });
 
@@ -129,7 +131,7 @@ const questionCtr = {
 
         return crudCtr.softDelete(questionModel, { id });
     },
-    recoverQuestion: async (req: any, args: any) => {
+    recoverQuestion: async (req: NextApiRequest, args: any) => {
         const { id } = args;
         const questionFound = await questionCtr.getQuestion(req, { id });
 

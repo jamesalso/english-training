@@ -1,5 +1,4 @@
 import { NextIntlClientProvider } from 'next-intl';
-import type { FC } from 'react';
 
 import { useLanguage } from '@/lib/hooks';
 

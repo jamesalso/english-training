@@ -1,105 +1,108 @@
-import type { FC, ReactNode } from 'react';
+import { signIn, signOut } from 'next-auth/react';
+import { usePathname, useRouter } from 'next/navigation';
+import type { FC } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
 import { withI18n } from '@/lib/hocs';
+import { useApi } from '@/lib/hooks';
 import {
-    useApi,
-    useCookie,
-    useLocalStorage,
-    useTranslations,
-} from '@/lib/hooks';
-import {
+    APIResponseSingle,
+    Children,
     I_AuthContextValue,
     I_AuthError,
-    I_LoginResponse,
     I_LoginValues,
-    I_User,
+    I_UserDocument,
+    T_LoginProvider,
 } from '@/typescript';
 
 export const AuthContext = createContext<I_AuthContextValue>({
     isLoading: false,
-    error: null,
-    user: null,
+    error: undefined,
+    user: undefined,
     login: async () => {},
+    loginSocial: async () => {},
     logout: async () => {},
 });
 
-export const AuthProvider: FC<{ children: ReactNode }> = withI18n(
-    ({ children }: { children: ReactNode }) => {
-        const [user, setUser] = useState<null | I_User>(null);
-        const [error, setError] = useState<null | I_AuthError>(null);
-        const localUser = useLocalStorage<I_User>('user');
-        const tokenCookie = useCookie<string>('cookie');
-        const tComponent = useTranslations('components');
-        const { isLoading, callApi } = useApi<I_LoginResponse>();
+export const AuthProvider: FC<Children> = withI18n(({ children }: Children) => {
+    // const tokenCookie = useCookie<string>('cookie');
+    const { isLoading, callApi } = useApi<APIResponseSingle<I_UserDocument>>();
+    const router = useRouter();
+    const pathname = usePathname();
+    const [user, setUser] = useState<I_UserDocument>();
+    const [error, setError] = useState<I_AuthError>();
 
-        async function checkAuth() {
-            try {
-                if (tokenCookie?.value) {
-                    setUser(localUser.value);
+    async function checkAuth() {
+        try {
+            const response = await callApi({
+                method: 'GET',
+                url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/check-auth`,
+            });
+
+            if (response?.success && response?.result) {
+                setUser(response?.result);
+            }
+        } catch (err) {
+            setError(err as I_AuthError);
+        }
+    }
+
+    async function login(values: I_LoginValues) {
+        try {
+            const response = await callApi({
+                method: 'POST',
+                url: `${process.env.NEXT_PUBLIC_API_LOGIN_URL}/login`,
+                data: values,
+            });
+
+            if (!response?.success) {
+                console.error(`common.login.error.${response?.message}`);
+            } else {
+                // tokenCookie.set(response?.idToken as string, {
+                //     expires: +(response?.expiresIn ?? 0) as number,
+                // });
+
+                if (response.result) {
+                    setUser(response.result);
                 }
-            } catch (err) {
-                setError(err as I_AuthError);
             }
+        } catch (err) {
+            setError(err as I_AuthError);
         }
+    }
 
-        async function login(values: I_LoginValues) {
-            try {
-                const response = await callApi({
-                    method: 'POST',
-                    url: `${process.env.NEXT_PUBLIC_API_LOGIN_URL}/login`,
-                    data: values,
-                });
+    async function loginSocial(provider: T_LoginProvider) {
+        signIn(provider);
+    }
 
-                if (response?.error) {
-                    console.error(
-                        `common.login.error.${response?.error?.message}`,
-                    );
-                } else {
-                    tokenCookie.set(response?.idToken as string, {
-                        expires: +(response?.expiresIn ?? 0) as number,
-                    });
+    async function logout() {
+        signOut();
+    }
 
-                    const user = {
-                        displayName: response?.displayName as string,
-                        email: response?.email as string,
-                    };
+    const contextValue: I_AuthContextValue = {
+        error,
+        user,
+        login,
+        loginSocial,
+        logout,
+        isLoading,
+    };
 
-                    localUser.set(user);
-                    setUser(user);
-                }
-            } catch (err) {
-                setError(err as I_AuthError);
-            }
+    useEffect(() => {
+        if (pathname?.includes('/admin') && user !== undefined && !user) {
+            router.push('/user/login');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
 
-        async function logout() {
-            try {
-                tokenCookie.remove();
-                localUser.remove();
-                setUser(null);
-            } catch (err) {
-                setError(err as I_AuthError);
-            }
-        }
+    useEffect(() => {
+        checkAuth();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-        const contextValue: I_AuthContextValue = {
-            error,
-            user,
-            login,
-            logout,
-            isLoading,
-        };
-
-        useEffect(() => {
-            checkAuth();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, []);
-
-        return (
-            <AuthContext.Provider value={contextValue}>
-                {children}
-            </AuthContext.Provider>
-        );
-    },
-);
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
+    );
+});

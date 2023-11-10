@@ -1,10 +1,11 @@
 'use client';
 import { useApi } from '@/lib/hooks';
-import { APIResponse, I_QuestionDocument } from '@/typescript';
+import { APIResponsePaginate, I_QuestionDocument } from '@/typescript';
 import { useEffect, useState } from 'react';
 
 const QuestionManagement = () => {
-    const { isLoading, callApi } = useApi<APIResponse<I_QuestionDocument>>();
+    const { isLoading, callApi } =
+        useApi<APIResponsePaginate<I_QuestionDocument>>();
     const [questions, setQuestions] = useState<I_QuestionDocument[]>([]);
 
     const getQuestions = async () => {
