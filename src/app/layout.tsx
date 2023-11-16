@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { BlankLayout } from '@/components/layout/user';
+import { LanguageProvider } from '@/lib/contexts';
 import { Children } from '@/typescript';
 
 import './globals.css';
@@ -12,9 +13,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Children) {
     return (
-        <html lang="en">
+        <html lang="vi">
             <body>
-                <BlankLayout>{children}</BlankLayout>
+                <LanguageProvider>
+                    <BlankLayout>{children}</BlankLayout>
+                </LanguageProvider>
             </body>
         </html>
     );

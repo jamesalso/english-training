@@ -1,58 +1,25 @@
 {
     "language": {
         "en": "Tiếng Anh",
-        "jp": "Tiếng Nhật",
         "vi": "Tiếng Việt"
     },
-    "navbar": {
-        "user": {
-            "profile": "Hồ sơ",
-            "history": "Lịch sử",
-            "settings": "Cài đặt",
-            "logout": "Đăng xuất"
-        }
-    },
-    "footer": {
-        "copyright": "Bản quyền"
-    },
-    "routes": {
-        "home": "Trang chủ",
-        "features": "Tính năng",
-        "about": "Giới thiệu",
-        "dashboard": "Bảng điều khiển",
-        "translation": "Dịch thuật"
-    },
-    "components": {
-        "common": {
-            "file-upload": {
-                "drop-file-here": "Thả tệp vào đây",
-                "drop-file-description": "Kéo và thả tệp vào đây hoặc nhấp để chọn tệp"
-            },
-            "login": {
-                "title": "Đăng nhập",
-                "email": "Tên đăng nhập",
-                "email-placeholder": "Nhập email",
-                "password": "Mật khẩu",
-                "password-placeholder": "Nhập mật khẩu",
-                "btn-login": "Đăng nhập",
-                "error": {
-                    "email": "Email là bắt buộc",
-                    "password": "Mật khẩu là bắt buộc",
-                    "INVALID_LOGIN_CREDENTIALS": "Email hoặc mật khẩu không chính xác",
-                    "INVALID_EMAIL": "Email không tồn tại"
-                }
-            }
-        }
-    },
-    "translation": {
-        "choose-language": "Chọn ngôn ngữ",
-        "choose-source-language": "Chọn ngôn ngữ nguồn",
-        "choose-target-language": "Chọn ngôn ngữ đích",
-        "btn-translate": "Dịch",
-        "error": {
-            "max-file-size": "Kích thước tệp không được vượt quá ${maxSize}MB"
+    "admin": {
+        "sidebar": {
+            "questions-management": "Quản lý câu hỏi"
         },
-        "translated-files": "Tệp đã dịch",
-        "btn-reset": "Đặt lại"
+        "header": {
+            "title": "Trang quản lý",
+            "sign-out": "Đăng xuất"
+        }
+    },
+    "user": {
+        "login": {
+            "title": "Đăng nhập",
+            "identify-placeholder": "Tên đăng nhập/Email/SĐT",
+            "password-placeholder": "Mật khẩu",
+            "login-button": "Đăng nhập",
+            "register-button": "Đăng ký",
+            "forgot-password-button": "Quên mật khẩu?"
+        }
     }
 }

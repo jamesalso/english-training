@@ -17,7 +17,7 @@ export const Sidebar = () => {
             <div className="my-1 hidden h-[80px] sm:flex sm:shrink-0 sm:items-start sm:justify-center">
                 <img
                     className="max-h-full transition-all"
-                    src={'/logo.svg'}
+                    src={'/images/logo.svg'}
                     alt="logo"
                 />
             </div>

@@ -1,15 +1,15 @@
 import { animated, useTransition } from '@react-spring/web';
-import { useState } from 'react';
+
+import { useAuth, useTranslations } from '@/lib/hooks';
 
 interface DropdownProps {
     show: boolean;
 }
 
 export const Dropdown = ({ show }: DropdownProps) => {
-    const [auth, setAuth] = useState({
-        name: 'Stephen',
-        email: 'zintaen@gmail.com',
-    });
+    const t = useTranslations('admin');
+    const { user, logout } = useAuth();
+
     const transition = useTransition(show, {
         from: {
             opacity: 0,
@@ -26,8 +26,7 @@ export const Dropdown = ({ show }: DropdownProps) => {
     });
 
     const handleLogout = () => {
-        // setAuth(null);
-        console.log('You have successfully logged out!');
+        logout();
     };
 
     return transition(
@@ -38,8 +37,8 @@ export const Dropdown = ({ show }: DropdownProps) => {
                     style={style}
                 >
                     <li className="relative mx-4 flex flex-col items-center gap-1 py-4">
-                        <h3>{auth?.name}</h3>
-                        <h6>{auth?.email}</h6>
+                        <h3>{user?.fullName}</h3>
+                        <h6>{user?.email}</h6>
                         <span className="absolute bottom-0 w-full border-b border-slate-400"></span>
                     </li>
                     <li>
@@ -48,7 +47,7 @@ export const Dropdown = ({ show }: DropdownProps) => {
                             className="flex w-full items-center gap-3 px-4 py-2 transition-colors  hover:text-active"
                         >
                             <i className="icon-logout text-lg"></i>
-                            <span>Sign out</span>
+                            <span>{t('header.sign-out')}</span>
                         </button>
                     </li>
                 </animated.ul>

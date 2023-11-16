@@ -9,8 +9,4 @@ export const LANGUAGE_LIST: Record<string, I_Language> = {
         code: 'vi',
         flag: '🇻🇳',
     },
-    jp: {
-        code: 'jp',
-        flag: '🇯🇵',
-    },
 };

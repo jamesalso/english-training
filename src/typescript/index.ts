@@ -14,6 +14,10 @@ export interface ClassName {
     className?: string;
 }
 
+export type T_Object = {
+    [key: string]: Object;
+};
+
 export type T_Any =
     | {
           [key: string]: Object | string | number | boolean | null | undefined;
@@ -27,20 +31,26 @@ export type T_Any =
 
 export interface DocumentPaginate<T> {
     docs: [T];
-    totalDocs: number;
-    offset: number;
+    hasNextPage: Boolean;
+    hasPrevPage: Boolean;
     limit: number;
-    totalPages: number;
+    nextPage: number;
+    offset: number;
     page: number;
     pagingCounter: number;
-    hasPrevPage: Boolean;
-    hasNextPage: Boolean;
     prevPage: number;
-    nextPage: number;
+    totalDocs: number;
+    totalPages: number;
 }
 
-export interface APIResponse<T> {
+export interface APIResponsePaginate<T> {
     success: boolean;
     message?: String;
     result?: DocumentPaginate<T>;
+}
+
+export interface APIResponseSingle<T> {
+    success: boolean;
+    message?: String;
+    result?: T;
 }
